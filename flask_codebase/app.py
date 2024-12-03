@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import logging
 import requests
 
@@ -39,7 +39,7 @@ def submit_search_historical_prices():
     # For example, you can print them or process them further
     logging.info(f'CCY Pair Symbol: {symbol}, Start Date: {start_date}, End Date: {end_date}, Time Interval: {time_interval}')
     fetch_historical_data(symbol, start_date, end_date, time_interval)
-    return render_template('index.html', fig=None)
+    return redirect(url_for('home'))
 
 if __name__ == '__main__':
     app.run(debug=True)
