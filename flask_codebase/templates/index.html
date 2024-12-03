@@ -247,34 +247,33 @@
         <section class="d-flex justify-content-center my-4">
             <div class="col-12 col-md-8 col-lg-6 bg-secondary bg-gradient p-3 rounded opacity-50">
                 <h1 class="text-black text-center">Search for Historical Prices</h1>
-                <div class="form-group mb-3 background-color:grey;">
-                    <label for="Ticker" class="text-white">Ticker</label>
-                    <input type="text" id="search-pair" class="form-control" placeholder="Enter pair (e.g., EUR/USD)">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="startDate" class="text-white">Start Date</label>
-                    <input type="date" id="startDate" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="endDate" class="text-white">End Date</label>
-                    <input type="date" id="endDate" class="form-control">
-                </div>
-                <div class="form-group mb-3">
-                    <label for="timeinterval" class="text-white">Time Interval</label>
-                    <select id="timeinterval" class="form-select">
-                        <option value="30min">30 min</option>
-                        <option value="4h">4 hours</option>
-                        <option value="1day">1 Day</option>
-                        <option value="1week">1 Week</option>
-                    </select>
-                </div>
-                <div class="text-center">
-                    <button id="search-button" class="btn btn-light">Enter</button>
-                </div>
-
+                <form action="/submit-search-historical-prices" method="POST">
+                    <div class="form-group mb-3 background-color:grey;">
+                        <label for="CCY Pair Symbol" class="text-white">CCY Pair Symbol</label>
+                        <input name="symbol" type="text" id="search-pair" class="form-control" placeholder="Enter pair (e.g., EUR/USD)">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="startDate" class="text-white">Start Date</label>
+                        <input name="start_date" type="date" id="startDate" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="endDate" class="text-white">End Date</label>
+                        <input name="end_date" type="date" id="endDate" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="timeinterval" class="text-white">Time Interval</label>
+                        <select name="time_interval" id="timeinterval" class="form-select">
+                            <option value="30min">30 min</option>
+                            <option value="4h">4 hours</option>
+                            <option value="1day">1 Day</option>
+                            <option value="1week">1 Week</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit-search-historical-prices" id="search-button" class="btn btn-light">Enter</button>
+                    </div>
+                </form>
             </div>
-
-
     </div>
 
     <!-- Historical prices starts here-->
