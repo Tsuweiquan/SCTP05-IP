@@ -1,2 +1,19 @@
 
 
+.table {
+    border-collapse: collapse; /* Ensures borders are collapsed */
+    width: 100%; /* Optional: makes the table take full width */
+}
+
+.table th, .table td {
+    padding: 8px; /* Adjust padding as needed */
+    text-align: center; /* Center align text */
+}
+
+.table th {
+    background-color: #f8f9fa; /* Light background for header */
+}
+
+.container-result-table {
+    margin-top: 0; /* Remove any top margin if present */
+}

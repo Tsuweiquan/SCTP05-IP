@@ -48,13 +48,16 @@ def submit_search_historical_prices():
     start_date = request.form['start_date']
     end_date = request.form['end_date']
     time_interval = request.form['time_interval']
-    
-    # Perform your logic here with the received values
-    # For example, you can print them or process them further
+    # TODO: assert start_date < end_date, else display out an error.
     logging.info(f'CCY Pair Symbol: {symbol}, Start Date: {start_date}, End Date: {end_date}, Time Interval: {time_interval}')
     historical_data = fetch_historical_data(symbol, start_date, end_date, time_interval)
-    data_transformation(historical_data)
-    return redirect(url_for('home'))
+    df_data = data_transformation(historical_data)
+    
+    # Display the data into html table
+    price_table_html = df_data.to_html(classes='table table-bordered table-striped text-center', index=False, header=False)
+    
+    # return redirect(url_for('home'))
+    return render_template('index.html', fig=None, price_table_html=price_table_html)
 
 if __name__ == '__main__':
     app.run(debug=True)
