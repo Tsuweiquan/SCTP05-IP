@@ -332,12 +332,8 @@
                         </div>
                         <form id="make-predictions">
                             <div class="col-12">
-                                <form class="d-flex" role="search">
+                                <form class="container">
                                     <div class="row">
-                                        <div class="col">
-                                            <label for="CCY Pair" class="text-white">CCY Pair Symbol</label>
-                                            <input name="symbol" type="text" id="symbol" class="form-control" placeholder="EUR/USD">
-                                        </div>
                                         <div class="col">
                                             <label for="startDate" class="text-white">Start Date</label>
                                             <input name="prediction_startDate" type="date" id="prediction_startDate" class="form-control">
@@ -346,8 +342,9 @@
                                             <label for="endDate" class="text-white">End Date</label>
                                             <input name="prediction_endDate" type="date" id="prediction_endDate" class="form-control">
                                         </div>
-                                        <div class="col">
-                                            <button class="btn btn-light" type="submit">Build</button>
+                                        <div class="col d-flex flex-column justify-content-between">
+                                            <label>&nbsp;</label>
+                                            <button class="btn btn-light " type="submit">Build</button>
                                         </div>
                                     </div>
                                 </form>
