@@ -89,7 +89,6 @@ train_predict = train_predict.reshape(-1,1)
 test_predict = test_predict.reshape(-1,1)
 
 # Transform back to original form
-
 train_predict = scaler.inverse_transform(train_predict)
 test_predict = scaler.inverse_transform(test_predict)
 original_ytrain = scaler.inverse_transform(y_train.reshape(-1,1)) 
