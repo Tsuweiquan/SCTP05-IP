@@ -1,6 +1,7 @@
 # Setting up Flask
 
 pip3 install Flask
+pip3 install -r requirements.txt
 
 # Running Flask
 
