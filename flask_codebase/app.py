@@ -279,85 +279,85 @@ def submit_make_predictions():
     fig.update_yaxes(showgrid=False)
 
     #####
-    # x_input = test_data[len(test_data) - time_step :].reshape(1, -1)
-    # temp_input = list(x_input)
-    # temp_input = temp_input[0].tolist()
+    x_input = test_data[len(test_data) - time_step :].reshape(1, -1)
+    temp_input = list(x_input)
+    temp_input = temp_input[0].tolist()
 
-    # lst_output = []
-    # i = 0
-    # pred_days = 10
-    # while i < pred_days:
-    #     if len(temp_input) > time_step:
-    #         x_input = np.array(temp_input[1:])
-    #         # logging.info("{} day input {}".format(i,x_input))
-    #         x_input = x_input.reshape(1, -1)
+    lst_output = []
+    i = 0
+    pred_days = 10
+    while i < pred_days:
+        if len(temp_input) > time_step:
+            x_input = np.array(temp_input[1:])
+            # logging.info("{} day input {}".format(i,x_input))
+            x_input = x_input.reshape(1, -1)
 
-    #         yhat = my_model.predict(x_input)
-    #         # logging.info("{} day output {}".format(i,yhat))
-    #         temp_input.extend(yhat.tolist())
-    #         temp_input = temp_input[1:]
+            yhat = my_model.predict(x_input)
+            # logging.info("{} day output {}".format(i,yhat))
+            temp_input.extend(yhat.tolist())
+            temp_input = temp_input[1:]
 
-    #         lst_output.extend(yhat.tolist())
-    #         i = i + 1
+            lst_output.extend(yhat.tolist())
+            i = i + 1
 
-    #     else:
-    #         yhat = my_model.predict(x_input)
+        else:
+            yhat = my_model.predict(x_input)
 
-    #         temp_input.extend(yhat.tolist())
-    #         lst_output.extend(yhat.tolist())
+            temp_input.extend(yhat.tolist())
+            lst_output.extend(yhat.tolist())
 
-    #         i = i + 1
+            i = i + 1
 
-    # logging.info("Output of predicted next days: ", len(lst_output))
+    logging.info("Output of predicted next days: ", len(lst_output))
 
-    # last_days = np.arange(0, time_step + 1)
-    # day_pred = np.arange(time_step + 1, time_step + pred_days + 1)
-    # logging.info(last_days)
-    # logging.info(day_pred)
-    # temp_mat = np.empty((len(last_days) + pred_days + 1, 1))
-    # temp_mat[:] = np.nan
-    # temp_mat = temp_mat.reshape(1, -1).tolist()[0]
+    last_days = np.arange(0, time_step + 1)
+    day_pred = np.arange(time_step + 1, time_step + pred_days + 1)
+    logging.info(last_days)
+    logging.info(day_pred)
+    temp_mat = np.empty((len(last_days) + pred_days + 1, 1))
+    temp_mat[:] = np.nan
+    temp_mat = temp_mat.reshape(1, -1).tolist()[0]
 
-    # last_original_days_value = temp_mat
-    # next_predicted_days_value = temp_mat
+    last_original_days_value = temp_mat
+    next_predicted_days_value = temp_mat
 
-    # last_original_days_value[0 : time_step + 1] = (
-    #     scaler.inverse_transform(closedf[len(closedf) - time_step :])
-    #     .reshape(1, -1)
-    #     .tolist()[0]
-    # )
-    # next_predicted_days_value[time_step + 1 :] = (
-    #     scaler.inverse_transform(np.array(lst_output).reshape(-1, 1))
-    #     .reshape(1, -1)
-    #     .tolist()[0]
-    # )
-    # new_pred_plot = pd.DataFrame(
-    #     {
-    #         "last_original_days_value": last_original_days_value,
-    #         "next_predicted_days_value": next_predicted_days_value,
-    #     }
-    # )
+    last_original_days_value[0 : time_step + 1] = (
+        scaler.inverse_transform(closedf[len(closedf) - time_step :])
+        .reshape(1, -1)
+        .tolist()[0]
+    )
+    next_predicted_days_value[time_step + 1 :] = (
+        scaler.inverse_transform(np.array(lst_output).reshape(-1, 1))
+        .reshape(1, -1)
+        .tolist()[0]
+    )
+    new_pred_plot = pd.DataFrame(
+        {
+            "last_original_days_value": last_original_days_value,
+            "next_predicted_days_value": next_predicted_days_value,
+        }
+    )
 
-    # names = cycle(["Last 15 days close price", "Predicted next 10 days close price"])
-    # fig = px.line(
-    #     new_pred_plot,
-    #     x=new_pred_plot.index,
-    #     y=[
-    #         new_pred_plot["last_original_days_value"],
-    #         new_pred_plot["next_predicted_days_value"],
-    #     ],
-    #     labels={"value": "Close price", "index": "Timestamp"},
-    # )
-    # fig.update_layout(
-    #     title_text="Compare last 15 bars vs next 10 bars",
-    #     plot_bgcolor="white",
-    #     font_size=15,
-    #     font_color="black",
-    #     legend_title_text="Close Price",
-    # )
-    # fig.for_each_trace(lambda t: t.update(name=next(names)))
-    # fig.update_xaxes(showgrid=False)
-    # fig.update_yaxes(showgrid=False)
+    names = cycle(["Last 15 days close price", "Predicted next 10 days close price"])
+    fig = px.line(
+        new_pred_plot,
+        x=new_pred_plot.index,
+        y=[
+            new_pred_plot["last_original_days_value"],
+            new_pred_plot["next_predicted_days_value"],
+        ],
+        labels={"value": "Close price", "index": "Timestamp"},
+    )
+    fig.update_layout(
+        title_text="Compare last 15 bars vs next 10 bars",
+        plot_bgcolor="white",
+        font_size=15,
+        font_color="black",
+        legend_title_text="Close Price",
+    )
+    fig.for_each_trace(lambda t: t.update(name=next(names)))
+    fig.update_xaxes(showgrid=False)
+    fig.update_yaxes(showgrid=False)
     # fig.show()
     # Convert the figure to JSON
     fig_json = fig.to_json()
