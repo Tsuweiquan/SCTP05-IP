@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industrial Project</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/style.css">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body style="background-image: url('static/images/starry_night.jpeg');">
+
+    <!--Weather Condition Display starts here-->
+    <div class="news-container-fluid col-12 col-lg-10 col-sm-10 mx-auto mt-5">
+        <span class="border border-primary-subtle">
+            <div class="bg--info-subtle bg-gradient p-1">
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+
+                    <div class="weather card-body">
+                        <div class="row no-gutters align-items-end">
+                            <div class="col mr-2">
+                                <img src=" " alt="Partly Cloudy Icon">
+                                <h2 class="city"></h2>
+                                <h1 class="Temp"></h1>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="row justify-content-md-center">
+                <div class="col-lg-4 col-sm-10 mt-2">
+                    <div class="card">
+                        <div class="card-body justify-content-md-end">
+                            <h5 class="card-title">Business</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-10 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Techhnology</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-10 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Science</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-sm-10 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">health</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </span>
+    </div>
+
+    <!--World Clock starts here-->
+    <div class="world clock section-padding">
+        <div class="container col-12 col-lg-10 mx-auto">
+            <div class="container-content text-center">
+
+                <div class="row">
+                    <div class="col-12">
+                        <h2>World Clcok</h2>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                    <div class="clock mb-30 text-center">
+                        <!--clock APi goes here-->
+                        <div class="clock">
+                            <image src="static/icons/new_york.png" alt=""></image>
+                            <div class="clock details">
+                                <h3>New York</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                    <div class="clock mb-30 text-center">
+                        <!--clock APi goes here-->
+                        <div class="clock">
+                            <image src="static/icons/Singapore.png" alt=""></image>
+                            <div class="clock details">
+                                <h3>Singapore</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                    <div class="clock mb-30 text-center">
+                        <!--clock APi goes here-->
+                        <div class="clock">
+                            <image src="static/icons/Australia.png" alt=""></image>
+                            <div class="clock details">
+                                <h3>Australia</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                    <div class="clock mb-30 text-center">
+                        <!--clock APi goes here-->
+                        <div class="clock">
+                            <image src="static/icons/hong_kong.png" alt=""></image>
+                            <div class="clock details">
+                                <h3 class>Hong Kong</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                    <div class="clock mb-30 text-center">
+                        <!--clock APi goes here-->
+                        <div class="clock">
+                            <image src="static/icons/Canada.png" alt=""></image>
+                            <div class="clock details">
+                                <h3 class>Canada</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-xl-2 col-lg-2 col-md-4 col-sm-4">
+                    <div class="clock mb-30 text-center">
+                        <!--clock APi goes here-->
+                        <div class="clock">
+                            <image src="static/icons/London.png" alt=""></image>
+                            <div class="clock details">
+                                <h3 class>London</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </div>
+    <!--My Broker starts here-->
+    <div class="broker-container col-12 col-lg-10 mx-auto mt-5">
+        <div class="bg--info-subtle bg-gradient p-1">
+            <div class="broker-top-container">
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <button class="btn btn-primary me-md-2 bg-warning-subtle" type="add-button">Add</button>
+                    <button class="btn btn-primary me-md-2 bg-warning-subtle" type="delete-button">Delete</button>
+                    <button class="btn btn-primary bg-warning-subtle" type="edit-button">Edit</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-4 col-sm-4 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Broker's Name</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                data-bs-target="#staticBackdrop">
+                                Add Broker's
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static"
+                                data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
+                                aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            ...
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-bs-dismiss="modal">Close</button>
+                                            <button type="button" class="btn btn-primary">Understood</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Broker's Name</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
+                            <a href="#" class="btn btn-primary">Place Order</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-4 col-sm-4 mt-2">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">Broker's Name</h5>
+                            <p class="card-text">With supporting text below as a natural lead-in to additional
+                                content.
+                            </p>
+                            <a href="#" class="btn btn-primary">Place Order</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Stock, FX, BTC starts here-->
+    <div id="container">
+        <section class="d-flex justify-content-center my-4">
+            <div class="col-12 col-md-8 col-lg-6 bg-secondary bg-gradient p-3 rounded opacity-80">
+                <h1 class="text-black text-center">Search for Historical Prices</h1>
+                <form id="price-search-form">
+                    <div class="form-group mb-3 background-color:grey;">
+                        <label for="CCY Pair Symbol" class="text-white">CCY Pair Symbol</label>
+                        <input name="symbol" type="text" id="search-pair" class="form-control" placeholder="Enter pair (e.g., EUR/USD)">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="startDate" class="text-white">Start Date</label>
+                        <input name="start_date" type="date" id="startDate" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="endDate" class="text-white">End Date</label>
+                        <input name="end_date" type="date" id="endDate" class="form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="timeinterval" class="text-white">Time Interval</label>
+                        <select name="time_interval" id="timeinterval" class="form-select">
+                            <option value="30min">30 min</option>
+                            <option value="4h">4 hours</option>
+                            <option value="1day">1 Day</option>
+                            <option value="1week">1 Week</option>
+                        </select>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit-search-historical-prices" id="search-button" class="btn btn-light">Enter</button>
+                    </div>
+                </form>
+            </div>
+    </div>
+
+    <!-- Historical prices starts here-->
+    <div class="container-result" id="result">
+        <div class="bg-primary bg-primary p-1">
+            <!-- Scrollable container for the table -->
+            <div class="container-content text-center">
+                <div class=row>
+
+                    <div class="col-lg-5 col-sm-4 mt-2">
+                        <div class="container-result-title">
+                            <h2>Historical Prices</h2>
+                        </div>
+
+                        <div class="container-result-table" style="max-height: 600px; overflow-y: auto">
+                            <table id="priceTable" class="table table-bordered table-striped text-center">
+                                <thead>
+                                    <tr>
+                                        <th>DateTime</th>
+                                        <th>Open</th>
+                                        <th>High</th>
+                                        <th>Low</th>
+                                        <th>Close</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="priceTableBody">
+                                    {{ price_table_html|safe }}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <script>
+                        $(document).ready(function() {
+                            $('#price-search-form').on('submit', function(event) {
+                                event.preventDefault(); // Prevent default form submission
+                
+                                $.ajax({
+                                    type: 'POST',
+                                    url: '/submit-search-historical-prices',
+                                    data: $(this).serialize(),
+                                    success: function(response) {
+                                        $('#priceTableBody').html(response.price_table_html);
+                                    },
+                                    error: function(error) {
+                                        console.error("Error:", error);
+                                    }
+                                });
+                            });
+                        });
+                    </script>
+
+                    <div class="col-lg-7 col-sm-4 mt-2">
+                        <div class="container-prediction-title">
+                            <h2>Prediction Model</h2>
+                        </div>
+                        <form id="make-predictions">
+                            <div class="col-12">
+                                <form class="container">
+                                    <div class="row">
+                                        <div class="col">
+                                            <label for="startDate" class="text-white">Start Date</label>
+                                            <input name="prediction_startDate" type="date" id="prediction_startDate" class="form-control">
+                                        </div>
+                                        <div class="col">
+                                            <label for="endDate" class="text-white">End Date</label>
+                                            <input name="prediction_endDate" type="date" id="prediction_endDate" class="form-control">
+                                        </div>
+                                        <div class="col d-flex flex-column justify-content-between">
+                                            <label>&nbsp;</label>
+                                            <button class="btn btn-light " type="submit">Build</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>                
+                        </form>
+
+                        <script>
+                            $(document).ready(function() {
+                                $('#make-predictions').on('submit', function(event) {
+                                    event.preventDefault(); // Prevent default form submission
+                    
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: '/make-predictions',
+                                        data: $(this).serialize(),
+                                        success: function(response) {
+                                            // Update the table body with new HTML
+                                            console.log("Making predictions...")
+                                            // Parse and render the Plotly figure
+                                            var figData = JSON.parse(response.fig_json);
+                                            Plotly.newPlot('plotly-figure', figData.data, figData.layout);
+                                        },
+                                        error: function(error) {
+                                            console.error("Error:", error);
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+
+                        <!-- Insert the chart here -->
+                        <div class="col-lg-12 col-sm-12 mt-2">
+                            <div id="plotly-figure"></div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.7.7/axios.min.js"
+            integrity="sha512-DdX/YwF5e41Ok+AI81HI8f5/5UsoxCVT9GKYZRIzpLxb8Twz4ZwPPX+jQMwMhNQ9b5+zDEefc+dcvQoPWGNZ3g=="
+            crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <script src="static/data.js"></script>
+        <script src="static/script.js"></script>
+</body>
+
+</html>
