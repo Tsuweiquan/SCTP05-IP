@@ -153,14 +153,14 @@ def submit_make_predictions():
     # Filter a smaller date time range for data training
     # GLOBAL_DF_DATA contains the whole historical data from above.
     closedf = GLOBAL_DF_DATA[["datetime", "close"]]
-    print("Shape of close dataframe:", closedf.shape)
+    logging.info("Shape of close dataframe:", closedf.shape)
     closedf = closedf[
         (closedf["datetime"] >= prediction_start_date)
         & (closedf["datetime"] <= prediction_end_date)
     ]
 
     close_stock = closedf.copy()
-    print("Total data for prediction: ", closedf.shape[0])
+    logging.info("Total data for prediction: ", closedf.shape[0])
     del closedf["datetime"]
 
     # Data normalization
@@ -173,10 +173,8 @@ def submit_make_predictions():
 
     # Testing size 30%
     test_size = len(closedf) - training_size
-    train_data, test_data = (
-        closedf[0:training_size, :],
-        closedf[training_size : len(closedf), :1],
-    )
+    train_data = closedf[0:training_size, :]  # All columns for training
+    test_data = closedf[training_size:, :]      # All columns for testing
 
     time_step = 15
     # Create dataset for training
@@ -192,10 +190,14 @@ def submit_make_predictions():
     predictions = my_model.predict(x_test)
 
     # Calculate error metrics
-    print(
+    
+    # For MAE, lower value is better.
+    logging.info(
         "Mean Absolute Error - MAE : " + str(mean_absolute_error(y_test, predictions))
     )
-    print(
+    
+    # For RMSE, lower value is better.
+    logging.info(
         "Root Mean squared Error - RMSE : "
         + str(math.sqrt(mean_squared_error(y_test, predictions)))
     )
@@ -203,29 +205,41 @@ def submit_make_predictions():
     # Prediction on trained data (see if overfitting)
     predicions_on_trained_data = my_model.predict(x_train)
 
+    # Reshape into 2d array
     train_predict = predicions_on_trained_data.reshape(-1, 1)
     test_predict = predictions.reshape(-1, 1)
 
-    # Transform back to original form
+    # Transform back to original form for display
     train_predict = scaler.inverse_transform(train_predict)
     test_predict = scaler.inverse_transform(test_predict)
-    original_ytrain = scaler.inverse_transform(y_train.reshape(-1, 1))
-    original_ytest = scaler.inverse_transform(y_test.reshape(-1, 1))
+    # original_ytrain = scaler.inverse_transform(y_train.reshape(-1, 1))
+    # original_ytest = scaler.inverse_transform(y_test.reshape(-1, 1))
 
     look_back = time_step
     trainPredictPlot = np.empty_like(closedf)
     trainPredictPlot[:, :] = np.nan
-    trainPredictPlot[look_back : len(train_predict) + look_back, :] = train_predict
-    print("Train predicted data: ", trainPredictPlot.shape)
+    
+    # Fill in training predictions
+    trainPredictPlot[look_back:len(train_predict) + look_back, :] = train_predict
+    # logging.info("Train predicted data: ", trainPredictPlot.shape)
 
     # shift test predictions for plotting
     testPredictPlot = np.empty_like(closedf)
     testPredictPlot[:, :] = np.nan
-    testPredictPlot[
-        len(train_predict) + (look_back * 2) + 1 : len(closedf) - 1, :
-    ] = test_predict
-    print("Test predicted data: ", testPredictPlot.shape)
+    # Fill in test predictions starting after training predictions
+    # Calculate start index for test predictions
+    start_index = len(train_predict) + (look_back * 2)
 
+    # Ensure that we do not exceed the bounds of closedf
+    # end_index = start_index + len(test_predict)
+    
+    testPredictPlot[start_index:start_index + len(test_predict), :] = test_predict
+    # Fill in test predictions
+    # if end_index <= len(testPredictPlot):
+    #     testPredictPlot[start_index:end_index, :] = test_predict
+    # else:
+    #     logging.error("Mismatch in sizes: Cannot fit test predictions into plot array.")
+    
     names = cycle(
         [
             "Original close price",
@@ -235,20 +249,20 @@ def submit_make_predictions():
     )
     plotdf = pd.DataFrame(
         {
-            "datetime": close_stock["datetime"],
-            "original_close": close_stock["close"],
-            "train_predicted_close": trainPredictPlot.reshape(1, -1)[0].tolist(),
-            "test_predicted_close": testPredictPlot.reshape(1, -1)[0].tolist(),
+            "datetime": close_stock["datetime"].values,
+            "original_close": close_stock["close"].values,
+            "train_predicted_close": trainPredictPlot.reshape(-1).tolist(),
+            "test_predicted_close": testPredictPlot.reshape(-1).tolist(),
         }
     )
 
     fig = px.line(
         plotdf,
-        x=plotdf["datetime"],
+        x="datetime",
         y=[
-            plotdf["original_close"],
-            plotdf["train_predicted_close"],
-            plotdf["test_predicted_close"],
+            "original_close",
+            "train_predicted_close",
+            "test_predicted_close",
         ],
         labels={"value": "Close price", "datetime": "Date"},
     )
@@ -265,85 +279,85 @@ def submit_make_predictions():
     fig.update_yaxes(showgrid=False)
 
     #####
-    x_input = test_data[len(test_data) - time_step :].reshape(1, -1)
-    temp_input = list(x_input)
-    temp_input = temp_input[0].tolist()
+    # x_input = test_data[len(test_data) - time_step :].reshape(1, -1)
+    # temp_input = list(x_input)
+    # temp_input = temp_input[0].tolist()
 
-    lst_output = []
-    i = 0
-    pred_days = 10
-    while i < pred_days:
-        if len(temp_input) > time_step:
-            x_input = np.array(temp_input[1:])
-            # print("{} day input {}".format(i,x_input))
-            x_input = x_input.reshape(1, -1)
+    # lst_output = []
+    # i = 0
+    # pred_days = 10
+    # while i < pred_days:
+    #     if len(temp_input) > time_step:
+    #         x_input = np.array(temp_input[1:])
+    #         # logging.info("{} day input {}".format(i,x_input))
+    #         x_input = x_input.reshape(1, -1)
 
-            yhat = my_model.predict(x_input)
-            # print("{} day output {}".format(i,yhat))
-            temp_input.extend(yhat.tolist())
-            temp_input = temp_input[1:]
+    #         yhat = my_model.predict(x_input)
+    #         # logging.info("{} day output {}".format(i,yhat))
+    #         temp_input.extend(yhat.tolist())
+    #         temp_input = temp_input[1:]
 
-            lst_output.extend(yhat.tolist())
-            i = i + 1
+    #         lst_output.extend(yhat.tolist())
+    #         i = i + 1
 
-        else:
-            yhat = my_model.predict(x_input)
+    #     else:
+    #         yhat = my_model.predict(x_input)
 
-            temp_input.extend(yhat.tolist())
-            lst_output.extend(yhat.tolist())
+    #         temp_input.extend(yhat.tolist())
+    #         lst_output.extend(yhat.tolist())
 
-            i = i + 1
+    #         i = i + 1
 
-    print("Output of predicted next days: ", len(lst_output))
+    # logging.info("Output of predicted next days: ", len(lst_output))
 
-    last_days = np.arange(0, time_step + 1)
-    day_pred = np.arange(time_step + 1, time_step + pred_days + 1)
-    print(last_days)
-    print(day_pred)
-    temp_mat = np.empty((len(last_days) + pred_days + 1, 1))
-    temp_mat[:] = np.nan
-    temp_mat = temp_mat.reshape(1, -1).tolist()[0]
+    # last_days = np.arange(0, time_step + 1)
+    # day_pred = np.arange(time_step + 1, time_step + pred_days + 1)
+    # logging.info(last_days)
+    # logging.info(day_pred)
+    # temp_mat = np.empty((len(last_days) + pred_days + 1, 1))
+    # temp_mat[:] = np.nan
+    # temp_mat = temp_mat.reshape(1, -1).tolist()[0]
 
-    last_original_days_value = temp_mat
-    next_predicted_days_value = temp_mat
+    # last_original_days_value = temp_mat
+    # next_predicted_days_value = temp_mat
 
-    last_original_days_value[0 : time_step + 1] = (
-        scaler.inverse_transform(closedf[len(closedf) - time_step :])
-        .reshape(1, -1)
-        .tolist()[0]
-    )
-    next_predicted_days_value[time_step + 1 :] = (
-        scaler.inverse_transform(np.array(lst_output).reshape(-1, 1))
-        .reshape(1, -1)
-        .tolist()[0]
-    )
-    new_pred_plot = pd.DataFrame(
-        {
-            "last_original_days_value": last_original_days_value,
-            "next_predicted_days_value": next_predicted_days_value,
-        }
-    )
+    # last_original_days_value[0 : time_step + 1] = (
+    #     scaler.inverse_transform(closedf[len(closedf) - time_step :])
+    #     .reshape(1, -1)
+    #     .tolist()[0]
+    # )
+    # next_predicted_days_value[time_step + 1 :] = (
+    #     scaler.inverse_transform(np.array(lst_output).reshape(-1, 1))
+    #     .reshape(1, -1)
+    #     .tolist()[0]
+    # )
+    # new_pred_plot = pd.DataFrame(
+    #     {
+    #         "last_original_days_value": last_original_days_value,
+    #         "next_predicted_days_value": next_predicted_days_value,
+    #     }
+    # )
 
-    names = cycle(["Last 15 days close price", "Predicted next 10 days close price"])
-    fig = px.line(
-        new_pred_plot,
-        x=new_pred_plot.index,
-        y=[
-            new_pred_plot["last_original_days_value"],
-            new_pred_plot["next_predicted_days_value"],
-        ],
-        labels={"value": "Close price", "index": "Timestamp"},
-    )
-    fig.update_layout(
-        title_text="Compare last 15 bars vs next 10 bars",
-        plot_bgcolor="white",
-        font_size=15,
-        font_color="black",
-        legend_title_text="Close Price",
-    )
-    fig.for_each_trace(lambda t: t.update(name=next(names)))
-    fig.update_xaxes(showgrid=False)
-    fig.update_yaxes(showgrid=False)
+    # names = cycle(["Last 15 days close price", "Predicted next 10 days close price"])
+    # fig = px.line(
+    #     new_pred_plot,
+    #     x=new_pred_plot.index,
+    #     y=[
+    #         new_pred_plot["last_original_days_value"],
+    #         new_pred_plot["next_predicted_days_value"],
+    #     ],
+    #     labels={"value": "Close price", "index": "Timestamp"},
+    # )
+    # fig.update_layout(
+    #     title_text="Compare last 15 bars vs next 10 bars",
+    #     plot_bgcolor="white",
+    #     font_size=15,
+    #     font_color="black",
+    #     legend_title_text="Close Price",
+    # )
+    # fig.for_each_trace(lambda t: t.update(name=next(names)))
+    # fig.update_xaxes(showgrid=False)
+    # fig.update_yaxes(showgrid=False)
     # fig.show()
     # Convert the figure to JSON
     fig_json = fig.to_json()
